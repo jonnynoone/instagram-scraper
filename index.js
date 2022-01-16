@@ -21,8 +21,11 @@ const PASSWORD = CONFIG.password;
         console.log(details);
         console.log(posts);
         console.log(`Number of posts scraped: ${posts.length}`);
+        
+        // Download images
+        await instagram.downloadImages(posts, user);
 
         // Kill scraper
-        // await instagram.end();
+        await instagram.end();
     }
 })();

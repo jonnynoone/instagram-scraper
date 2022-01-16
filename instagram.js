@@ -13,7 +13,7 @@ let page = null;
 const instagram = {
     initialize: async () => {
         browser = await puppeteer.launch({
-            headless: false
+            headless: true
         });
 
         page = await browser.newPage();
@@ -78,7 +78,7 @@ const instagram = {
             return { username, displayName, posts, followers, following, description, website };
         });
     },
-    
+
     getPosts: async (username) => {
         // Navigate to user page
         let url = await page.url();
@@ -143,6 +143,22 @@ const instagram = {
         }
 
         return results;
+    },
+
+    downloadImages: async (posts, username) => {
+        console.log('Downloading images...');
+
+        // Check if directories exist
+        if (!fs.existsSync(`./images/${username}`)) {
+            fs.mkdirSync(`./images/${username}`, { recursive: true });
+        }
+
+        // Iterate through posts and download images
+        for (let i = 0; i < posts.length; i++) {
+            await request(posts[i].image).pipe(fs.createWriteStream(`./images/${username}/image_${i + 1}.jpg`));
+        }
+
+        console.log('Images downloaded.');
     },
 
     end: async () => {
