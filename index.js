@@ -12,10 +12,15 @@ const PASSWORD = CONFIG.password;
     if (loggedIn) {
         console.log('Successfully logged in...')
 
+        // Scrape data
         let user = 'vaporwavepalace';
         let details = await instagram.getUserDetails(user);
+        let posts = await instagram.getPosts(user);
 
+        // Log output
         console.log(details);
+        console.log(posts);
+        console.log(`Number of posts scraped: ${posts.length}`);
 
         // Kill scraper
         // await instagram.end();
