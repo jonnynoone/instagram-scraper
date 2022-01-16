@@ -12,6 +12,11 @@ const PASSWORD = CONFIG.password;
     if (loggedIn) {
         console.log('Successfully logged in...')
 
+        let user = 'vaporwavepalace';
+        let details = await instagram.getUserDetails(user);
+
+        console.log(details);
+
         // Kill scraper
         // await instagram.end();
     }
